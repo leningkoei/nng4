@@ -1,1 +1,1 @@
--- Not defined, maybe just use the built in exact tactic.
+-- Not defined, maybe just use the built in `exact` tactic.
