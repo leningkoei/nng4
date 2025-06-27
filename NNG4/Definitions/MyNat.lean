@@ -32,3 +32,10 @@ def ℕ.hMul
 | .succ a', b => b + (ℕ.hMul a' b)
 instance : HMul ℕ ℕ ℕ where
   hMul := ℕ.hMul
+
+def ℕ.hPow
+: ℕ → ℕ → ℕ
+| _, 0 => 1
+| a, .succ n' => a * ℕ.hPow a n'
+instance : HPow ℕ ℕ ℕ where
+  hPow := ℕ.hPow
