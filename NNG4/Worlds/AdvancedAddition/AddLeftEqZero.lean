@@ -1,7 +1,5 @@
 import NNG4.Definitions.MyNat
 import NNG4.Tactics.RW
-import NNG4.Tactics.Symm
-import NNG4.Tactics.Cases
 import NNG4.Tactics.Apply
 import NNG4.Theorems.AddComm
 import NNG4.Theorems.AddRightEqZero
