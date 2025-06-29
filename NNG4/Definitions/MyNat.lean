@@ -5,10 +5,7 @@ deriving Repr
 
 notation "ℕ" => MyNat
 
--- def succ : ℕ → ℕ := MyNat.succ
-
-def ℕ.ofNat
-: Nat → ℕ
+def ℕ.ofNat : Nat → ℕ
 | .zero => .zero
 | .succ a' => .succ (ℕ.ofNat a')
 
@@ -18,24 +15,23 @@ instance : OfNat ℕ 0 where
 instance [OfNat ℕ n] : OfNat ℕ (n + 1) where
   ofNat := .succ (OfNat.ofNat n)
 
-def ℕ.hAdd
-: ℕ → ℕ → ℕ
+def ℕ.hAdd : ℕ → ℕ → ℕ
 | .zero, b => b
 | .succ a', b => .succ (ℕ.hAdd a' b)
 instance : HAdd ℕ ℕ ℕ where
   hAdd := ℕ.hAdd
 
-def ℕ.hMul
-: ℕ → ℕ → ℕ
+def ℕ.hMul : ℕ → ℕ → ℕ
 | .zero, _ => .zero
--- | _, .zero => .zero
 | .succ a', b => b + (ℕ.hMul a' b)
 instance : HMul ℕ ℕ ℕ where
   hMul := ℕ.hMul
 
-def ℕ.hPow
-: ℕ → ℕ → ℕ
+def ℕ.hPow : ℕ → ℕ → ℕ
 | _, 0 => 1
 | a, .succ n' => a * ℕ.hPow a n'
 instance : HPow ℕ ℕ ℕ where
   hPow := ℕ.hPow
+
+def ℕ.le (a b : ℕ) := ∃ (c : ℕ), b = a + c
+instance : LE MyNat := ⟨ℕ.le⟩
