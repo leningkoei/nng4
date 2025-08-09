@@ -1,3 +1,5 @@
+import NNG4.Tactics.LabelAttr
+
 inductive MyNat : Type where
 | zero : MyNat
 | succ : MyNat → MyNat
@@ -5,15 +7,24 @@ deriving Repr
 
 notation "ℕ" => MyNat
 
-def ℕ.ofNat : Nat → ℕ
+@[MyNat_decide]
+def MyNat.ofNat : Nat → ℕ
 | .zero => .zero
-| .succ a' => .succ (ℕ.ofNat a')
+| .succ a' => .succ (MyNat.ofNat a')
 
-instance : OfNat ℕ 0 where
-  ofNat := .zero
+-- instance : OfNat ℕ 0 where
+--   ofNat := .zero
+-- instance [OfNat ℕ n] : OfNat ℕ (n + 1) where
+--   ofNat := .succ (OfNat.ofNat n)
+-- instance instofNat {n : Nat} : OfNat MyNat n where
+--   ofNat := MyNat.ofNat n
+instance : OfNat MyNat (n : Nat) where
+  ofNat := MyNat.ofNat n
 
-instance [OfNat ℕ n] : OfNat ℕ (n + 1) where
-  ofNat := .succ (OfNat.ofNat n)
+@[MyNat_decide]
+def MyNat.toNat : MyNat → Nat
+| .zero => Nat.zero
+| .succ b => Nat.succ (MyNat.toNat b)
 
 def ℕ.hAdd : ℕ → ℕ → ℕ
 | .zero, b => b
